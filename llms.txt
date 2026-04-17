@@ -1,0 +1,31 @@
+# template-python-cli
+
+> Python CLI template — uv, Typer, hatchling, release-please, PyPI OIDC, Homebrew tap dispatch
+
+## Stack
+
+- **Runtime**: Python 3.11+, Typer (Rich transitive), importlib.resources for bundled assets
+- **Build**: hatchling, src layout (`src/template_python_cli/`)
+- **Package manager**: uv (lockfile: `uv.lock`)
+- **Linting**: ruff (E, F, I, N, W, UP rules), line-length 100
+- **Testing**: pytest + pytest-cov, 75% coverage gate, `cli.py` excluded
+- **CI**: GitHub Actions — `test.yml` (ubuntu-latest, Python 3.11/3.12/3.13), `release.yml` (release-please v4, PyPI OIDC, Homebrew tap dispatch)
+
+## Configuration
+
+3-layer merge: bundled `defaults.toml` → `~/.config/template-python-cli/config.toml` → `TEMPLATE_PYTHON_CLI_*` env vars.
+
+## Conventions
+
+- Conventional Commits v1.0.0 (7 types: feat, fix, docs, chore, ci, test, refactor)
+- stdout = data only; stderr = progress/warnings/errors
+- Exit codes: 0 success, 1 runtime error, 2 invalid input, 130 interrupted
+- Signal handlers (SIGINT/SIGTERM → exit 130) registered before Typer app definition
+
+## Bootstrapping
+
+```bash
+gh repo create my-tool --template calvindotsg/template-python-cli --public
+gh repo clone calvindotsg/my-tool
+bash scripts/init.sh my-tool "My tool description"
+```

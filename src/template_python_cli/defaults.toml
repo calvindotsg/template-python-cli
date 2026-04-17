@@ -1,0 +1,3 @@
+[general]
+greeting = "Hello"
+verbose = false
